@@ -30,8 +30,15 @@ export class UserService {
     return result;
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.find().select({ password: 0 }).exec();
+  async findAll(query: QueryWithPagination): Promise<User[]> {
+    const { current = 1, pageSize = 10 } = query;
+
+    return this.userModel
+      .find()
+      .select({ password: 0 })
+      .skip(current - 1)
+      .limit(+pageSize)
+      .exec();
   }
 
   async findOne(id: string): Promise<User> {

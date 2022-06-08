@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,8 +25,8 @@ export class UserController {
   }
 
   @Get('list')
-  async findAll() {
-    return this.userService.findAll();
+  async findAll(@Query() query: QueryWithPagination) {
+    return this.userService.findAll(query);
   }
 
   @Get(':id')
