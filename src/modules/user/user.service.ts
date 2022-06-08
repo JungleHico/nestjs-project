@@ -21,7 +21,7 @@ export class UserService {
       username,
     });
     if (found) {
-      throw new BadRequestException(`user ${username} is existed`);
+      throw new BadRequestException('该用户已存在');
     }
 
     const createUser = new this.userModel(createUserDto);
@@ -41,14 +41,11 @@ export class UserService {
       .exec();
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string) {
     const user = await this.userModel
       .findOne({ _id: id })
       .select({ password: 0 })
       .exec();
-    if (!user) {
-      throw new NotFoundException(`user #${id} is not found`);
-    }
 
     return user;
   }
@@ -64,7 +61,7 @@ export class UserService {
       .select({ password: 0 })
       .exec();
     if (!user) {
-      throw new NotFoundException(`user #${id} is not found`);
+      throw new NotFoundException('未找到该用户');
     }
 
     return user;
