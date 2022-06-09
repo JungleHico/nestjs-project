@@ -1,5 +1,6 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { LoggerMiddleWare } from './common/middleware/logger.middleware';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -10,4 +11,9 @@ import { UserModule } from './modules/user/user.module';
     UserModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  // 配置中间件
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleWare).forRoutes('');
+  }
+}

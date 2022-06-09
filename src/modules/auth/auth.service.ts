@@ -11,6 +11,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  // 登录
   async login({ username, password }: AuthDto): Promise<any> {
     const user = await this.userService.findOneByUsername(username);
     if (!user) {
@@ -24,10 +25,11 @@ export class AuthService {
     const { password: pass, ...result } = user.toJSON();
     return {
       ...result,
-      token: this.jwtService.sign({ username: user.username }),
+      token: this.jwtService.sign({ username: user.username }), // 返回token
     };
   }
 
+  // 注册
   async register({ username, password }: AuthDto) {
     // 加密
     const saltOrRounds = 10;

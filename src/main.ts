@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
-import { ResponseInterceptor } from 'src/common/interceptor/response.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { ResponseInterceptor } from './common/interceptor/response.interceptor';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
@@ -21,7 +21,7 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true, // 过滤用户输入的无关字段
       // forbidNonWhitelisted: true, // 禁止用户输入无关字段
-      // transform: true, // 自动类型转换
+      transform: true, // 自动类型转换
     }),
   );
   await app.listen(3000);
